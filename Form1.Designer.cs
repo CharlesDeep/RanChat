@@ -35,6 +35,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -79,10 +81,10 @@
             this.label2.Location = new System.Drawing.Point(593, 97);
             this.label2.Name = "label2";
             this.label2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label2.Size = new System.Drawing.Size(600, 20);
+            this.label2.Size = new System.Drawing.Size(600, 40);
             this.label2.TabIndex = 5;
             this.label2.Text = "First write the IP of the server on its text box, then you can start writing the " +
-    "message.";
+    "message.\r\nMaximun lengh of message is 1000 letters, including puntuation.\r\n";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
@@ -103,11 +105,31 @@
             this.label4.TabIndex = 7;
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(691, 492);
+            this.textBox3.MaxLength = 26;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(242, 26);
+            this.textBox3.TabIndex = 8;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(642, 492);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(43, 20);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Nick:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1207, 556);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBox3);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -132,6 +154,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label5;
     }
 }
 

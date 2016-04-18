@@ -27,8 +27,13 @@ namespace Cliente_RanChat
         private void button1_Click(object sender, EventArgs e)
         {
             
-            byte[] BytesToSend; //Created array that is going to be sent.
-            BytesToSend = Encoding.Default.GetBytes(textBox1.Text); //Text is converted to bytes.
+            byte[] BytesToSend, BytesNick, messagedata; //Created array that is going to be sent.
+            BytesNick = new byte[26];
+            messagedata = new byte[1026];
+            BytesToSend = Encoding.Default.GetBytes(textBox1.Text); //Message is converted to bytes.
+            BytesNick = Encoding.Default.GetBytes(textBox3.Text); //Nick is converted to bytes.
+            Array.Copy(BytesNick,0,messagedata,0, BytesNick.Length);
+            Array.Copy(BytesToSend, 0, messagedata, 27, BytesToSend.Length);
             Socket ClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp); //Socket created
             IPEndPoint ClientAdress = new IPEndPoint(IPAddress.Parse(serverIp), 8889);
             try
@@ -36,7 +41,7 @@ namespace Cliente_RanChat
                 label4.Text = "DISCONNECTED";
                 ClientSocket.Connect(ClientAdress); //It connects to server
                 label4.Text = "CONNECTED";
-                ClientSocket.Send(BytesToSend, 0, BytesToSend.Length, SocketFlags.None);
+                ClientSocket.Send(messagedata, 0, messagedata.Length, SocketFlags.None);
                 MessageBox.Show("Message sent");
             }
             catch (Exception error)
@@ -57,6 +62,11 @@ namespace Cliente_RanChat
         }
 
         private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
         {
 
         }
