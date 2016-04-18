@@ -20,13 +20,15 @@ namespace RanChat_Server
         public static void InitServer()
         {
             int x = 0;
+            string usernick;
             Socket ServerSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint ServerAdress = new IPEndPoint(IPAddress.Any, 8889); //Socket created, listening any ip on the net on port 8889.
             ServerSocket.Bind(ServerAdress); //Adress associated with the socket
 
             while (true)
             {
-                byte[] ByteToReceive;
+                byte[] BytesToReceive, bytesOfNick;
+                bytesOfNick = new byte[26];
                 try
                 {
                     
@@ -43,14 +45,20 @@ namespace RanChat_Server
                         Console.WriteLine("Connected succesfully.");
                         x++;
                     }
-                    ByteToReceive = new byte[1024];
+                    BytesToReceive = new byte[1024];
                     int byteStreamReceived;
-                    byteStreamReceived = Listening.Receive(ByteToReceive, 0, ByteToReceive.Length, 0); //Array of text in bytes received
-                    Array.Resize(ref ByteToReceive, byteStreamReceived); //Resizing the array
-                    string TextReceived = Encoding.Default.GetString(ByteToReceive); //Array is converted to text
+                    byteStreamReceived = Listening.Receive(BytesToReceive, 0, BytesToReceive.Length, 0); //Array of text in bytes received
+                    Array.Resize(ref BytesToReceive, byteStreamReceived); //Resizing the array
                     string Client_IP = Listening.RemoteEndPoint.ToString();
+                    Buffer.BlockCopy(BytesToReceive, 0, bytesOfNick, 0, 26);
+                    Buffer.BlockCopy(BytesToReceive, 26, BytesToReceive, 0, 998);
+                    string TextReceived = Encoding.Default.GetString(BytesToReceive); //Array is converted to text
+                    usernick = Encoding.Default.GetString(bytesOfNick);
                     Console.Write(Client_IP);
-                    Console.Write("      : " + TextReceived);
+                    Console.Write("  (");
+                    Console.Write(usernick);
+                    Console.Write(")");
+                    Console.WriteLine(" : " + TextReceived);
                     Listening.Close();
                 }
                 catch (Exception error)
